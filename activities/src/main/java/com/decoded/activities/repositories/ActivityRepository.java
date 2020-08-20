@@ -2,8 +2,10 @@ package com.decoded.activities.repositories;
 
 import com.decoded.activities.data.Activity;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 
-public interface ActivityRepository extends JpaRepository<Long, Activity> {
+@RestResource(exported = true)
+public interface ActivityRepository extends CrudRepository<Activity, Long> {
 
 }
