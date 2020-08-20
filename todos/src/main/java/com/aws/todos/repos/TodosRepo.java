@@ -1,5 +1,9 @@
-package main.java.com.aws.todos.repos;
+package com.aws.todos.repos;
 
-public interface TodosRepo extends JpaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.aws.todos.entities.Todos;
+
+public interface TodosRepo extends JpaRepository<Todos, String> {
 
 }
