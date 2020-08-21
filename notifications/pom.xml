@@ -13,6 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>notifications</name>
 	<description>Todos API</description>
+	
 
 	<properties>
 		<java.version>8</java.version>
