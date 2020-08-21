@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class OkodeAnyunguUsersApplication {
 
-//users
+	// users users
 	public static void main(String[] args) {
 		SpringApplication.run(OkodeAnyunguUsersApplication.class, args);
 	}
