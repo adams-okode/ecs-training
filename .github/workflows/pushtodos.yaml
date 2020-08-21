@@ -13,7 +13,7 @@ env:
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  CONTAINER_IMAGE: activities:${{ github.sha }}
+  CONTAINER_IMAGE: todos:${{ github.sha }}
 
 jobs:
   build-and-push:
@@ -34,7 +34,7 @@ jobs:
 
       - name: Maven Package
         run: |
-          cd activities
+          cd todos
           mvn -B clean package -DskipTests
 
       - name: Build and tag the image
