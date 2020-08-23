@@ -1,5 +1,5 @@
 datacenter = "our_dc"
-data_dir = "/opt/consul"
+data_dir = "/ecs-builder/consul"
 // verify_incoming = true
 // verify_outgoing = true
 // verify_server_hostname = true
