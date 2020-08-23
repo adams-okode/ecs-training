@@ -1,22 +1,13 @@
 datacenter = "our_dc"
 data_dir = "/opt/consul"
-// verify_incoming = true
-// verify_outgoing = true
-// verify_server_hostname = true
-bootstrap_expect = 1
-ui = true
-client_addr = "0.0.0.0"
-server = true
-connect = {
-  enabled = true
-}
-bind_addr = "{{ GetInterfaceIP "eth0" }}"
- 
-//lol lol
+
+
+retry_join = "172.31.13.201"
+
 service {
-  name = "counting"
-  id = "counting-1"
-  port = 9003
+  name = "users"
+  id = "users-1"
+  port = 8080
 
   connect {
     sidecar_service {}

@@ -1,4 +1,9 @@
-#lol
+
+
+
+#lol build users
 FROM consul:latest
-ADD consul.hcl /etc/consul.d/consul.hcl
-CMD [ "consul", "agent", "-config_file=/etc/consul.d/consul.hcl" ]
+COPY consul.hcl /etc/consul.d/consul.hcl
+RUN mkdir /opt/consul
+RUN chmod -R 777 /opt/consul
+CMD [ "consul", "agent", "-config-file", "/etc/consul.d/consul.hcl" ]
