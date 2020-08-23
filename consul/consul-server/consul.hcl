@@ -7,13 +7,15 @@ bootstrap_expect = 1
 ui = true
 client_addr = "0.0.0.0"
 server = true
-connect = {
+connect {
   enabled = true
 }
 bind_addr = "{{GetInterfaceIP \"eth0\"}}"
+
 // auto_encrypt = {
 //   allow_tls = true
 // }
+
 // acl = {
 //   enabled = true
 //   default_policy = "deny"
