@@ -2,11 +2,11 @@ datacenter = "our_dc"
 
 data_dir = "/opt/consul"
 
-retry_join = [ "172.31.13.201" ]
+retry_join = ["172.31.13.201"]
 
 bind_addr = "{{ GetInterfaceIP \"eth0\" }}"
 
-service {
+services {
   name = "users"
   id = "users-1"
   port = 8080
@@ -29,7 +29,7 @@ service {
 }
 
 
-service {
+services {
   name = "activities"
   id = "activities-1"
   port = 8081
