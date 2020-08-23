@@ -15,7 +15,7 @@ service {
 
   check {
     id       = "users-check"
-    http     = "http://localhost:8080/health"
+    http     = "http://localhost:8080"
     method   = "GET"
     interval = "1s"
     timeout  = "1s"
