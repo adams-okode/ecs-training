@@ -4,6 +4,8 @@ data_dir = "/opt/consul"
 
 retry_join = ["172.31.13.201"]
 
+bind_addr = "{{GetInterfaceIP \"eth0\"}}"
+
 service {
   name = "users"
   id = "users-1"
