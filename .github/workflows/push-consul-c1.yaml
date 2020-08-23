@@ -3,9 +3,10 @@ name: Building and pushing Consul Server docker image to Amazon ECR
 on:
   push:
     paths:
-      - consul/consul-users/**
+      - consul/consul-cluster-1/**
     branches:
       - aw
+      - ao
 
 env:
   AWS_DEFAULT_REGION: eu-west-1

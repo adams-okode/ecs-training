@@ -5,7 +5,9 @@ on:
     paths:
       - todos/**
     branches:
-      - master
+      - aw
+      - ao
+
 
 env:
   AWS_DEFAULT_REGION: eu-west-1
