@@ -10,7 +10,7 @@ server = true
 connect = {
   enabled = true
 }
-bind_addr = "{{ GetInterfaceIP "eth0" }}"
+bind_addr = "{{GetInterfaceIP \"eth0\"}}"
 // auto_encrypt = {
 //   allow_tls = true
 // }
