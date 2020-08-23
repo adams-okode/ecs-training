@@ -7,8 +7,7 @@ retry_join = ["172.31.13.201"]
 bind_addr = "{{ GetInterfaceIP \"eth0\" }}"
 
 variable "our_server_address" {
-  type = string
-  default="{{ GetInterfaceIP \"eth0\" }}"
+  default = "{{ GetInterfaceIP \"eth0\" }}"
 }
 
 services {
