@@ -12,7 +12,7 @@ connect = {
 }
 bind_addr = "{{ GetInterfaceIP "eth0" }}"
  
-//lol
+//lol lol
 service {
   name = "counting"
   id = "counting-1"
