@@ -11,6 +11,7 @@ service {
   id = "users-1"
   port = 8080
 
+//rebuild
   connect {
     sidecar_service {}
   }

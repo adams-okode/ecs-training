@@ -15,6 +15,7 @@ bind_addr = "{{GetInterfaceIP \"eth0\"}}"
 // auto_encrypt = {
 //   allow_tls = true
 // }
+
 // acl = {
 //   enabled = true
 //   default_policy = "deny"
