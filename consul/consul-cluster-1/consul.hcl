@@ -6,9 +6,6 @@ retry_join = ["172.31.13.201"]
 
 bind_addr = "{{ GetInterfaceIP \"eth0\" }}"
 
-variable "our_server_address" {
-  default = "{{ GetInterfaceIP \"eth0\" }}"
-}
 
 services {
   name = "users"
@@ -18,14 +15,14 @@ services {
   connect {
     sidecar_service {
       proxy {
-        local_service_address = "${var.our_server_address}"
+        local_service_address = "172.31.15.135"
       }
     }
   }
 
   check {
     id       = "users-check"
-    http     = "http://${var.our_server_address}:8080"
+    http     = "http://172.31.15.135:8080"
     method   = "GET"
     interval = "5s"
     timeout  = "3s"
@@ -41,14 +38,14 @@ services {
   connect {
     sidecar_service {
       proxy {
-        local_service_address = "${var.our_server_address}"
+        local_service_address = "172.31.15.135"
       }
     }
   }
 
   check {
     id       = "activities-check"
-    http     = "http://${var.our_server_address}:8081"
+    http     = "http://172.31.15.135:8081"
     method   = "GET"
     interval = "5s"
     timeout  = "3s"
