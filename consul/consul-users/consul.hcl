@@ -17,7 +17,7 @@ service {
     id       = "users-check"
     http     = "http://localhost:8080"
     method   = "GET"
-    interval = "1s"
-    timeout  = "1s"
+    interval = "50s"
+    timeout  = "30s"
   }
 }
