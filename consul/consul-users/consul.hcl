@@ -15,11 +15,11 @@ service {
     sidecar_service {}
   }
 
-  check {
-    id       = "users-check"
-    http     = "http://localhost:8080"
-    method   = "GET"
-    interval = "50s"
-    timeout  = "30s"
-  }
+//   check {
+//     id       = "users-check"
+//     http     = "http://localhost:8080"
+//     method   = "GET"
+//     interval = "50s"
+//     timeout  = "30s"
+//   }
 }
