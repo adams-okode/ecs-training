@@ -1,11 +1,11 @@
-name: Building and pushing Consul docker image to Amazon ECR
+name: Building and pushing Consul Server docker image to Amazon ECR
 
 on:
   push:
     paths:
-      - consul/**
+      - consul/consul-server/**
     branches:
-      - master
+      - aw
 
 env:
   AWS_DEFAULT_REGION: eu-west-1
@@ -13,7 +13,7 @@ env:
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  CONTAINER_IMAGE: consul:${{ github.sha }}
+  CONTAINER_IMAGE: consul-server:${{ github.sha }}
 
 jobs:
   build-and-push:
@@ -31,7 +31,7 @@ jobs:
         run: |
           docker build \
             -t $CONTAINER_IMAGE \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./consul
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./consul/consul-server
 
       - name: Push
         if: github.ref == 'refs/heads/master'
