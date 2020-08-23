@@ -8,7 +8,7 @@ LABEL maintainer="adamsokode@gmail.com"
 VOLUME /tmp
 
 # Make port 8080 available to the world outside 
-EXPOSE 8080
+EXPOSE 8081
 
 # The application's jar file
 ARG JAR_FILE=target/activities-0.0.1-SNAPSHOT.jar
