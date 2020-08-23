@@ -1,4 +1,4 @@
-#lol
+#lol build
 FROM consul:latest
 COPY consul.hcl /etc/consul.d/consul.hcl
 RUN mkdir /opt/consul
