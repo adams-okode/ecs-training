@@ -1,4 +1,5 @@
 datacenter = "our_dc"
+
 data_dir = "/opt/consul"
 
 retry_join = [ "172.31.13.201" ]
