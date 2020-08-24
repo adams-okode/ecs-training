@@ -11,10 +11,11 @@ SAMPLE_FILE=$(cat ./opt/consul/consul.sample.json)
 JSON_STRING=$(jq -n --arg snadress "$OUR_SERVER_ADDRESS" "$SAMPLE_FILE")
 
 echo $JSON_STRING >>/etc/consul.d/consul.json
-echo $OUR_SERVER_ADDRESS
+
 #Initialize the consul agent
+echo '0'
 consul agent -config-file /etc/consul.d/consul.json
-
+echo '1'
 consul connect proxy -sidecar-for users-1
-
+echo '2'
 consul connect proxy -sidecar-for activities-1
