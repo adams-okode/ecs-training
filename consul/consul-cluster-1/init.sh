@@ -13,4 +13,7 @@ JSON_STRING=$(jq -n --arg snadress "$OUR_SERVER_ADDRESS" "$SAMPLE_FILE")
 echo $JSON_STRING >> /etc/consul.d/consul.json
 echo $(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 #Initialize the consul agent
-consul agent -config-file /etc/consul.d/consul.json 
+consul agent -config-file /etc/consul.d/consul.json
+
+consul connect proxy -sidecar-for users-1
+consul connect proxy -sidecar-for activities-1
