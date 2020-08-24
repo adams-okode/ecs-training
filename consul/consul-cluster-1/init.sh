@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #Set variables
-OUR_SERVER_ADDRESS=$(ip -4 addr show lo0 | grep -Po 'inet \K[\d.]+')
+OUR_SERVER_ADDRESS=$(ip -4 addr show eth0 | grep -Po 'inet \K[\d.]+')
 
 #Collect sample json file
 SAMPLE_FILE=$(cat ./opt/consul/consul.sample.json)
@@ -10,7 +10,10 @@ SAMPLE_FILE=$(cat ./opt/consul/consul.sample.json)
 #natural (and efficient) way, thanks to Jonathan Leffler).
 JSON_STRING=$(jq -n --arg snadress "$OUR_SERVER_ADDRESS" "$SAMPLE_FILE")
 
-echo $JSON_STRING >> /etc/consul.d/consul.json
+echo $JSON_STRING >>/etc/consul.d/consul.json
 
 #Initialize the consul agent
-consul agent -config-file /etc/consul.d/consul.json 
+consul agent -config-file /etc/consul.d/consul.json
+
+consul connect proxy -sidecar-for users-1
+consul connect proxy -sidecar-for activities-1
