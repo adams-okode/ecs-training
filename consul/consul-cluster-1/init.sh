@@ -16,4 +16,5 @@ echo $(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep 
 consul agent -config-file /etc/consul.d/consul.json
 
 consul connect proxy -sidecar-for users-1
+
 consul connect proxy -sidecar-for activities-1
