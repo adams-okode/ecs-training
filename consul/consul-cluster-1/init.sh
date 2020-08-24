@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #Set variables
-OUR_SERVER_ADDRESS=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+OUR_SERVER_ADDRESS=$(ip -4 addr show lo0 | grep -Po 'inet \K[\d.]+')
 
 #Collect sample json file
 SAMPLE_FILE=$(cat ./opt/consul/consul.sample.json)
