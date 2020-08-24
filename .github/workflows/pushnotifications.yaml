@@ -1,4 +1,4 @@
-name: Building and pushing Activities docker image to Amazon ECR
+name: Building and pushing Notifications docker image to Amazon ECR
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 env:
   AWS_DEFAULT_REGION: eu-west-1
   AWS_DEFAULT_OUTPUT: json
-  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT853497131747.dkr.ecr.eu-west-1.amazonaws.com/todos:c0bc1f0a13db484cdae9ca4098b7201d45dd5da6_ID }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   CONTAINER_IMAGE: notifications:${{ github.sha }}
@@ -45,6 +45,6 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./notifications
 
       - name: Push
-        if: github.ref == 'refs/heads/master'
+        # if: github.ref == 'refs/heads/master'
         run: |
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE

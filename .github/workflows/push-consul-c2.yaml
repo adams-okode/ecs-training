@@ -1,4 +1,4 @@
-name: Building and pushing Consul Server docker image to Amazon ECR
+name: Building and pushing Consul Consul Agent client for cluster 2 docker image to Amazon ECR
 
 on:
   push:

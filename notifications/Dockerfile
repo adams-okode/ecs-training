@@ -7,7 +7,7 @@ LABEL maintainer="adamsokode@gmail.com"
 # Add a volume pointing to /tmpe
 VOLUME /tmp
 
-# Make port 8080 available to the world outside this 
+# Make port 8080 available to the world outside this repeat
 EXPOSE 8081
 
 # The application's jar file
