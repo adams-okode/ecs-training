@@ -15,6 +15,6 @@ echo $JSON_STRING >>/etc/consul.d/consul.json
 #Initialize the consul agent
 nohup consul agent -config-file /etc/consul.d/consul.json &
 
-nohup consul connect proxy -sidecar-for users-1 &
+nohup consul connect proxy -sidecar-for notifications-1 &
 
-nohup consul connect proxy -sidecar-for activities-1
+nohup consul connect proxy -sidecar-for todos-1

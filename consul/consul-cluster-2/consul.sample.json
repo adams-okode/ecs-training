@@ -1,0 +1,64 @@
+{
+    "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+    "data_dir": "/opt/consul",
+    "datacenter": "our_dc",
+    "retry_join": [
+        "172.31.13.201"
+    ],
+    "services": [
+        {
+            "check": [
+                {
+                    "http": "http://\($snadress):8080",
+                    "id": "todos-check",
+                    "interval": "5s",
+                    "method": "GET",
+                    "timeout": "3s"
+                }
+            ],
+            "connect": [
+                {
+                    "sidecar_service": [
+                        {
+                            "proxy": [
+                                {
+                                    "local_service_address": $snadress
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "id": "todos-1",
+            "name": "todos",
+            "port": 8080
+        },
+        {
+            "check": [
+                {
+                    "http": "http://\($snadress):8081",
+                    "id": "notifications-check",
+                    "interval": "5s",
+                    "method": "GET",
+                    "timeout": "3s"
+                }
+            ],
+            "connect": [
+                {
+                    "sidecar_service": [
+                        {
+                            "proxy": [
+                                {
+                                    "local_service_address": $snadress
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "id": "notifications-1",
+            "name": "notifications",
+            "port": 8081
+        }
+    ]
+}
