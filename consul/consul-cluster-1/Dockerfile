@@ -1,7 +1,18 @@
 #lol build users
-
 FROM consul:latest
-COPY consul.hcl /etc/consul.d/consul.hcl
+
+RUN apk add jq
+
 RUN mkdir /opt/consul
+
+RUN mkdir /etc/consul.d
+
 RUN chmod -R 777 /opt/consul
-CMD [ "consul", "agent", "-config-file", "/etc/consul.d/consul.hcl" ]
+
+RUN chmod -R 777 /etc/consul.d
+
+COPY init.sh /opt/consul/init.sh
+
+COPY consul.sample.json /opt/consul/consul.sample.json
+
+RUN chmod +x /opt/consul/init.sh
