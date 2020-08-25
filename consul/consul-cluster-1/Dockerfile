@@ -1,6 +1,8 @@
 #lol build users
 FROM consul:latest
 
+FROM envoyproxy/envoy:latest
+
 RUN apk update && apk add jq --no-cache supervisor
 
 RUN mkdir /opt/consul && chmod -R 777 /opt/consul
