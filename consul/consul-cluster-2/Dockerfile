@@ -2,7 +2,7 @@
 
 FROM consul:latest
 
-FROM envoyproxy/envoy:v1.14.4
+FROM envoyproxy/envoy-alpine:latest
 
 RUN apk update && apk add jq --no-cache supervisor
 
