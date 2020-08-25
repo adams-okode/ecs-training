@@ -1,7 +1,9 @@
 #lol build users
 FROM consul:latest
 
-FROM envoyproxy/envoy:latest
+FROM envoyproxy/envoy:v1.14.4
+
+
 
 RUN apk update && apk add jq --no-cache supervisor
 
