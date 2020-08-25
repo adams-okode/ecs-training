@@ -1,4 +1,4 @@
-name: Building and pushing Activities docker image to Amazon ECR
+name: Building and pushing Notifications docker image to Amazon ECR
 
 on:
   push:
@@ -45,6 +45,6 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./notifications
 
       - name: Push
-        if: github.ref == 'refs/heads/master'
+        # if: github.ref == 'refs/heads/master'
         run: |
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
