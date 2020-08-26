@@ -3,8 +3,11 @@ ARG ENVOY_VERSION=1.14-latest
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
 
+
+
 # ENV CONSUL_HTTP_ADDR=http://localhost:8500
 # Remove env localhost
+
 
 ARG CONSUL_VERSION=1.8.0
 
@@ -23,6 +26,12 @@ COPY init.sh /opt/consul/init.sh
 COPY consul.sample.json /opt/consul/consul.sample.json
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN export OUR_SERVER_ADDRESS=$(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
+
+RUN export CONSUL_HTTP_ADDR="{$OUR_SERVER_ADDRESS}:8500"
+
+RUN export CONSUL_GRPC_ADDR="{$OUR_SERVER_ADDRESS}:8500"
 
 RUN chmod +x /opt/consul/init.sh
 
