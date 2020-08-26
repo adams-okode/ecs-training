@@ -1,11 +1,8 @@
-#lol build users
+# lol build users
 ARG ENVOY_VERSION=1.14-latest
-
-ARG OUR_SERVER_ADDRESS='127.0.0.1'
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
 
-# ENV CONSUL_HTTP_ADDR=http://localhost:8500
 # Remove env localhost
 ARG CONSUL_VERSION=1.8.0
 
@@ -26,9 +23,9 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN chmod +x /opt/consul/init.sh
 
-ENV CONSUL_HTTP_ADDR="$OUR_SERVER_ADDRESS:8500"
+COPY entrypoint.sh /entrypoint.sh
 
-ENV CONSUL_GRPC_ADDR="$OUR_SERVER_ADDRESS:8502"
+RUN chmod +x /entrypoint.sh
 
 RUN apk add -u bash curl && \
     wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \
