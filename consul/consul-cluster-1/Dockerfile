@@ -1,13 +1,7 @@
 #lol build users
 ARG ENVOY_VERSION=1.14-latest
 
-<<<<<<< HEAD
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
-=======
-FROM envoyproxy/envoy-alpine:v1.14-latest
-
-RUN apk update && apk add jq --no-cache supervisor
->>>>>>> f9e260ae1dcb1a05469bfc18421144ca7b974c8f
 
 ENV CONSUL_HTTP_ADDR=http://localhost:8500
 
