@@ -5,7 +5,7 @@ OUR_SERVER_ADDRESS=$(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[
 
 export CONSUL_GRPC_ADDR="{$OUR_SERVER_ADDRESS}:8502"
 
-export CONSUL_GRPC_ADDR="{$OUR_SERVER_ADDRESS}:8500"
+export CONSUL_HTTP_ADDR="{$OUR_SERVER_ADDRESS}:8500"
 
 echo '1'
 echo $OUR_SERVER_ADDRESS
