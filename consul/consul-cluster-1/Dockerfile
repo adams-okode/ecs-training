@@ -3,7 +3,8 @@ ARG ENVOY_VERSION=1.14-latest
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
 
-ENV CONSUL_HTTP_ADDR=http://localhost:8500
+# ENV CONSUL_HTTP_ADDR=http://localhost:8500
+# Remove env localhost
 
 ARG CONSUL_VERSION=1.8.0
 
