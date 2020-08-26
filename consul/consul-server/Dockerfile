@@ -1,7 +1,7 @@
 #lol build
 FROM consul:latest
 
-FROM envoyproxy/envoy-alpine:v1.14-latest
+
 
 
 COPY consul.hcl /etc/consul.d/consul.hcl
