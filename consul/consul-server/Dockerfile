@@ -1,5 +1,9 @@
 #lol build
 FROM consul:latest
+
+FROM envoyproxy/envoy-alpine:v1.14-latest
+
+
 COPY consul.hcl /etc/consul.d/consul.hcl
 RUN mkdir /opt/consul
 RUN chmod -R 777 /opt/consul

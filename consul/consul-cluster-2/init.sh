@@ -13,8 +13,4 @@ JSON_STRING=$(jq -n --arg snadress "$OUR_SERVER_ADDRESS" "$SAMPLE_FILE")
 echo $JSON_STRING >>/etc/consul.d/consul.json
 
 #Initialize the consul agent
-nohup consul agent -config-file /etc/consul.d/consul.json &
-
-nohup consul connect proxy -sidecar-for notifications-1 &
-
-nohup consul connect proxy -sidecar-for todos-1
+consul agent -config-file /etc/consul.d/consul.json

@@ -5,6 +5,9 @@
     "retry_join": [
         "172.31.13.201"
     ],
+    "ports": {
+        "grpc": 8502
+    },
     "services": [
         {
             "check": [
