@@ -1,0 +1,6 @@
+version: "3.3"
+
+services:
+  consul:
+    build: .
+    # command: ./docker-entrypoint.sh

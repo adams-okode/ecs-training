@@ -1,0 +1,67 @@
+{
+    "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+    "data_dir": "/opt/consul",
+    "datacenter": "our_dc",
+    "retry_join": [
+        "172.31.13.201"
+    ],
+    "ports": {
+        "grpc": 8502
+    },
+    "services": [
+        {
+            "check": [
+                {
+                    "http": "http://\($snadress):8080",
+                    "id": "users-check",
+                    "interval": "5s",
+                    "method": "GET",
+                    "timeout": "3s"
+                }
+            ],
+            "connect": [
+                {
+                    "sidecar_service": [
+                        {
+                            "proxy": [
+                                {
+                                    "local_service_address": $snadress
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "id": "users-1",
+            "name": "users",
+            "port": 8080
+        },
+        {
+            "check": [
+                {
+                    "http": "http://\($snadress):8081",
+                    "id": "activities-check",
+                    "interval": "5s",
+                    "method": "GET",
+                    "timeout": "3s"
+                }
+            ],
+            "connect": [
+                {
+                    "sidecar_service": [
+                        {
+                            "proxy": [
+                                {
+                                    "local_service_address": $snadress
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "id": "activities-1",
+            "name": "activities",
+            "port": 8081
+        }
+    ]
+}
