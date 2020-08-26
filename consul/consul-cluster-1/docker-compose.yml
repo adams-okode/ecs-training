@@ -2,5 +2,9 @@ version: "3.3"
 
 services:
   consul:
-    build: .
-    # command: ./docker-entrypoint.sh
+    environment: 
+      SNADDRESS: $(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
+    build:
+      context: .
+      args: 
+        OUR_SERVER_ADDRESS: ${SNADDRESS}
