@@ -26,6 +26,8 @@ COPY init.sh /opt/consul/init.sh
 
 COPY registeringress.sh /opt/consul/registeringress.sh
 
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 EXPOSE 21000-21005
 
 RUN chmod +x /opt/consul/init.sh
