@@ -17,7 +17,7 @@ RUN mkdir -p /opt/consul  \
 
 COPY init.sh /opt/consul/init.sh
 
-COPY registeruser.sh /opt/consul/registeruser.sh
+COPY registerusers.sh /opt/consul/registerusers.sh
 
 COPY registeractivities.sh /opt/consul/registeractivities.sh
 
@@ -27,7 +27,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN chmod +x /opt/consul/init.sh
 
-RUN chmod +x /opt/consul/registeruser.sh
+RUN chmod +x /opt/consul/registerusers.sh
 
 RUN chmod +x /opt/consul/registeractivities.sh
 
