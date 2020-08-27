@@ -17,7 +17,7 @@ RUN mkdir -p /opt/consul  \
 
 COPY init.sh /opt/consul/init.sh
 
-COPY registeruser.sh /opt/consul/registeruser.sh
+COPY registerusers.sh /opt/consul/registerusers.sh
 
 COPY registeractivities.sh /opt/consul/registeractivities.sh
 
@@ -29,7 +29,7 @@ EXPOSE 21000-21005
 
 RUN chmod +x /opt/consul/init.sh
 
-RUN chmod +x /opt/consul/registeruser.sh
+RUN chmod +x /opt/consul/registerusers.sh
 
 RUN chmod +x /opt/consul/registeractivities.sh
 
@@ -39,5 +39,7 @@ RUN apk add -u bash curl && \
     unzip /tmp/consul.zip -d /tmp && \
     mv /tmp/consul /usr/local/bin/consul && \
     rm -f /tmp/consul.zip
+
+# ENTRYPOINT [ "./opt/consul/registeractivities.sh" ]
 
 CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,5 +1,6 @@
 {
-    "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+    "bind_addr": "{{GetInterfaceIP \"eth0\"}}",
+
     "addresses": {
         "http": "\($snadress)",
         "grpc": "\($snadress)"
