@@ -1,6 +1,6 @@
 {
     "bind_address": "\($snadress)",
-    "http_addr": {
+    "addresses": {
         "http": "\($snadress)",
         "grpc": "\($snadress)"
     },

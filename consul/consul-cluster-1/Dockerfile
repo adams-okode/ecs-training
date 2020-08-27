@@ -17,15 +17,19 @@ RUN mkdir -p /opt/consul  \
 
 COPY init.sh /opt/consul/init.sh
 
+COPY registeruser.sh /opt/consul/registeruser.sh
+
+COPY registeractivities.sh /opt/consul/registeractivities.sh
+
 COPY consul.sample.json /opt/consul/consul.sample.json
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN chmod +x /opt/consul/init.sh
 
-COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /opt/consul/registeruser.sh
 
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /opt/consul/registeractivities.sh
 
 RUN apk add -u bash curl && \
     wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \
