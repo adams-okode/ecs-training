@@ -38,6 +38,6 @@ RUN apk add -u bash curl && \
     mv /tmp/consul /usr/local/bin/consul && \
     rm -f /tmp/consul.zip
 
-ENTRYPOINT [ "./opt/consul/registeractivities.sh" ]
+# ENTRYPOINT [ "./opt/consul/registeractivities.sh" ]
 
-# CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
