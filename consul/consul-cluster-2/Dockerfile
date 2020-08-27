@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 # lol build users
 ARG ENVOY_VERSION=1.14-latest
+=======
+#lol build cluster 2
+>>>>>>> 1dadfaa03dadc6da4b7edb9d7ebd97d10614f562
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
 
