@@ -1,4 +1,4 @@
-#lol build users
+#lol build cluster 2
 
 FROM consul:latest
 
