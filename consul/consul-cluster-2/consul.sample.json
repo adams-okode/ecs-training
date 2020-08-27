@@ -1,12 +1,19 @@
 {
     "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+    "addresses": {
+        "http": "\($snadress)",
+        "grpc": "\($snadress)"
+    },
     "data_dir": "/opt/consul",
     "datacenter": "our_dc",
     "retry_join": [
         "172.31.13.201"
     ],
     "ports": {
-        "grpc": 8502
+        "grpc": 8502,
+        "http": 8500,
+        "sidecar_max_port": 21005,
+        "sidecar_min_port": 21000
     },
     "services": [
         {
