@@ -1,30 +1,45 @@
-#lol build users
+# lol build users
+ARG ENVOY_VERSION=1.14-latest
 
-FROM consul:latest
+FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
 
-RUN apk update && apk add jq --no-cache supervisor
+# Remove env localhost
+ARG CONSUL_VERSION=1.8.0
 
-RUN mkdir /opt/consul && chmod -R 777 /opt/consul
+RUN apk update && apk add jq --no-cache supervisor 
 
-RUN mkdir /etc/consul.d && chmod -R 777 /etc/consul.d
-
-RUN mkdir /var/logs && chmod -R 777 /var/logs
+RUN mkdir -p /opt/consul  \
+    && mkdir -p /etc/consul.d \
+    && mkdir /var/logs \
+    && chmod -R 777 /opt/consul \
+    && chmod -R 777 /etc/consul.d \
+    && chmod -R 777 /var/logs
 
 COPY init.sh /opt/consul/init.sh
+
+COPY registeruser.sh /opt/consul/registertodos.sh
+
+COPY registeractivities.sh /opt/consul/registernotifications.sh
 
 COPY consul.sample.json /opt/consul/consul.sample.json
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+EXPOSE 21000-21005
+
 RUN chmod +x /opt/consul/init.sh
 
-CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+RUN chmod +x /opt/consul/registeruser.sh
 
+RUN chmod +x /opt/consul/registeractivities.sh
 
-FROM envoyproxy/envoy-alpine:v1.14-latest
+RUN apk add -u bash curl && \
+    wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \
+    -O /tmp/consul.zip && \
+    unzip /tmp/consul.zip -d /tmp && \
+    mv /tmp/consul /usr/local/bin/consul && \
+    rm -f /tmp/consul.zip
 
-COPY --from=0 /bin/consul /bin/consul
-ENTRYPOINT ["consul", "connect", "envoy"]
-
+CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 
