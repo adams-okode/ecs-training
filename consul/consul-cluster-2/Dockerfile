@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 # lol build users
 ARG ENVOY_VERSION=1.14-latest
-=======
-#lol build cluster 2
->>>>>>> 1dadfaa03dadc6da4b7edb9d7ebd97d10614f562
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
 
@@ -21,9 +17,9 @@ RUN mkdir -p /opt/consul  \
 
 COPY init.sh /opt/consul/init.sh
 
-COPY registeruser.sh /opt/consul/registertodos.sh
+COPY registertodos.sh /opt/consul/registertodos.sh
 
-COPY registeractivities.sh /opt/consul/registernotifications.sh
+COPY registernotifications.sh /opt/consul/registernotifications.sh
 
 COPY consul.sample.json /opt/consul/consul.sample.json
 
@@ -33,9 +29,9 @@ EXPOSE 21000-21005
 
 RUN chmod +x /opt/consul/init.sh
 
-RUN chmod +x /opt/consul/registeruser.sh
+RUN chmod +x /opt/consul/registertodos.sh
 
-RUN chmod +x /opt/consul/registeractivities.sh
+RUN chmod +x /opt/consul/registernotifications.sh
 
 RUN apk add -u bash curl && \
     wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \

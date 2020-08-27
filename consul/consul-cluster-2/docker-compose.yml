@@ -3,4 +3,3 @@ version: "3.3"
 services:
   consul:
     build: .
-    command: ./opt/consul/init.sh
