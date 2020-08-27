@@ -25,6 +25,8 @@ COPY consul.sample.json /opt/consul/consul.sample.json
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+EXPOSE 21000-21005
+
 RUN chmod +x /opt/consul/init.sh
 
 RUN chmod +x /opt/consul/registeruser.sh
