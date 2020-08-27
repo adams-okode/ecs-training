@@ -11,9 +11,7 @@ JSON_STRING=$(jq -n --arg snadress "$OUR_SERVER_ADDRESS" "$SAMPLE_FILE")
 
 echo $JSON_STRING >> /etc/consul.d/consul.json
 
-echo $(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
-
 # Initialize the consul agent
-envoy -c /etc/envoy/envoy.yaml
+# envoy -c /etc/envoy/envoy.yaml
 
 consul agent -config-file /etc/consul.d/consul.json

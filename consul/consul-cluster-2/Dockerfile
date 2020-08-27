@@ -2,8 +2,6 @@
 
 FROM consul:latest
 
-FROM envoyproxy/envoy-alpine:v1.14-latest
-
 RUN apk update && apk add jq --no-cache supervisor
 
 RUN mkdir /opt/consul && chmod -R 777 /opt/consul
@@ -21,4 +19,12 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /opt/consul/init.sh
 
 CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+
+
+FROM envoyproxy/envoy-alpine:v1.14-latest
+
+COPY --from=0 /bin/consul /bin/consul
+ENTRYPOINT ["consul", "connect", "envoy"]
+
+
 

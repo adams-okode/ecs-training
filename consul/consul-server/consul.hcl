@@ -3,6 +3,7 @@ data_dir = "/opt/consul"
 // verify_incoming = true
 // verify_outgoing = true
 // verify_server_hostname = true
+// grpc
 bootstrap_expect = 1
 ui = true
 client_addr = "0.0.0.0"
