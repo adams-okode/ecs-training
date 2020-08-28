@@ -58,6 +58,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: consul-c1-proxy-agent-service
+          service: consul-cluster-one-agent-service
           cluster: cluster-service-activities
           wait-for-service-stability: true
