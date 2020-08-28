@@ -103,8 +103,7 @@
             "readonlyRootFilesystem": null,
             "dockerLabels": null,
             "systemControls": null,
-            "privileged": null,
-            "name": "consul-agent-1"
+            "privileged": null
         }
     ],
     "placementConstraints": [],
