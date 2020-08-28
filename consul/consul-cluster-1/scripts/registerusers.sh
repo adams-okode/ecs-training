@@ -4,7 +4,7 @@ SERVICE="users"
 OUR_SERVER_ADDRESS=$(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 
 # Collect sample json file
-SAMPLE_FILE=$(cat ./opt/consul/configs/consul.mapper.json)
+SAMPLE_FILE=$(cat ./opt/consul/configs/config.mapper.json)
 
 # Read in template one line at the time, and replace variables (more natural (and efficient) way, thanks to Jonathan Leffler).
 JSON_STRING=$(jq -n --arg service "$SERVICE" "$SAMPLE_FILE")
