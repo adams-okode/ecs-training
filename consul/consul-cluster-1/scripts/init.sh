@@ -13,5 +13,4 @@ echo $JSON_STRING >> /etc/consul.d/consul.json
 
 # Initialize the consul agent
 # envoy -c /etc/envoy/envoy.yaml
-
 consul agent -config-file /etc/consul.d/consul.json
