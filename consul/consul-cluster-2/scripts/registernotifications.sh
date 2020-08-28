@@ -1,5 +1,5 @@
 #!/bin/sh
-SERVICE="notifications"
+ NeonVest Expert VC="notifications"
 
 OUR_SERVER_ADDRESS=$(ip addr show wlo1 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 

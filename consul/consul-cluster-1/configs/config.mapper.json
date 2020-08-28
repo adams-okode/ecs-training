@@ -1,5 +1,5 @@
 {
-    "kind": "service-defaults",
-    "name": "\($service)",
-    "protocol": "http"
+    "Kind": "service-defaults",
+    "Name": "\($service)",
+    "Protocol": "http"
 }
