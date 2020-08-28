@@ -5,8 +5,8 @@ on:
     paths:
       - consul/consul-cluster-2/**
     branches:
-      - aw
-      - ao
+      - build
+    
 
 env:
   AWS_DEFAULT_REGION: eu-west-1

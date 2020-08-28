@@ -5,8 +5,7 @@ on:
     paths:
       - notifications/**
     branches:
-      - aw
-      - ao
+      - build
 
 env:
   AWS_DEFAULT_REGION: eu-west-1
