@@ -15,23 +15,20 @@ RUN mkdir -p /opt/consul  \
     && chmod -R 777 /etc/consul.d \
     && chmod -R 777 /var/logs
 
-COPY init.sh /opt/consul/init.sh
+ADD configs /opt/consul/configs
 
-COPY registertodos.sh /opt/consul/registertodos.sh
+ADD scripts /opt/consul/scripts
 
-COPY registernotifications.sh /opt/consul/registernotifications.sh
-
-COPY consul.sample.json /opt/consul/consul.sample.json
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 21000-21005
 
-RUN chmod +x /opt/consul/init.sh
+RUN chmod +x /opt/consul/scripts/init.sh
 
-RUN chmod +x /opt/consul/registertodos.sh
+RUN chmod +x /opt/consul/scripts/registertodos.sh
 
-RUN chmod +x /opt/consul/registernotifications.sh
+RUN chmod +x /opt/consul/scripts/registernotifications.sh
 
 RUN apk add -u bash curl && \
     wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \

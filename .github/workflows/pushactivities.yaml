@@ -5,8 +5,7 @@ on:
     paths:
       - activities/**  
     branches:
-      - aw
-      - ao
+      - build
 
 
 env:
