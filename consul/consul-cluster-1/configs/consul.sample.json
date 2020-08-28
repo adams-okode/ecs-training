@@ -1,4 +1,5 @@
 {
+    
     "bind_addr": "{{GetInterfaceIP \"eth0\"}}",
     "addresses": {
         "http": "\($snadress)",
