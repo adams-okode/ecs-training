@@ -1,3 +1,17 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/.pyc": true,
+        "**/target": true, // this is a default value
+        "**/.settings": true, // this is a default value
+        "**/.mvn": true, // this is a default value
+        "**/.classpath": true, // this excludes the folder
+        "**/.project": true // this excludes the folder
+    },
+    "editor.formatOnSave": true,
 }
