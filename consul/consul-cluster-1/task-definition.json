@@ -103,7 +103,8 @@
             "readonlyRootFilesystem": null,
             "dockerLabels": null,
             "systemControls": null,
-            "privileged": null
+            "privileged": null,
+            "name": "consul-c1-proxy-agent"
         }
     ],
     "placementConstraints": [],
@@ -112,7 +113,6 @@
     "compatibilities": [
         "EC2"
     ],
-    "taskDefinitionArn": "arn:aws:ecs:eu-west-1:853497131747:task-definition/consul-cluster-1:29",
     "family": "consul-cluster-1",
     "requiresAttributes": [
         {
