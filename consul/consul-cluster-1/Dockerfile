@@ -21,6 +21,7 @@ ADD scripts /opt/consul/scripts
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+#try
 EXPOSE 21000-21005
 
 RUN chmod +x /opt/consul/scripts/init.sh
