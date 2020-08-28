@@ -1,6 +1,5 @@
 {
     "bind_addr": "{{GetInterfaceIP \"eth0\"}}",
-
     "addresses": {
         "http": "\($snadress)",
         "grpc": "\($snadress)"
@@ -16,6 +15,7 @@
         "sidecar_max_port": 21005,
         "sidecar_min_port": 21000
     },
+    "enable_central_service_config": true,
     "services": [
         {
             "check": [

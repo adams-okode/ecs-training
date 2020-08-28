@@ -14,5 +14,6 @@
     "http": 8500,
     "sidecar_max_port": 21005,
     "sidecar_min_port": 21000
-  }
+  },
+  "enable_central_service_config": true
 }

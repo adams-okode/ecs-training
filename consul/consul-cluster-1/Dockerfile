@@ -15,23 +15,19 @@ RUN mkdir -p /opt/consul  \
     && chmod -R 777 /etc/consul.d \
     && chmod -R 777 /var/logs
 
-COPY init.sh /opt/consul/init.sh
+ADD configs /opt/consul/configs
 
-COPY registerusers.sh /opt/consul/registerusers.sh
-
-COPY registeractivities.sh /opt/consul/registeractivities.sh
-
-COPY consul.sample.json /opt/consul/consul.sample.json
+ADD scripts /opt/consul/scripts
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 21000-21005
 
-RUN chmod +x /opt/consul/init.sh
+RUN chmod +x /opt/consul/scripts/init.sh
 
-RUN chmod +x /opt/consul/registerusers.sh
+RUN chmod +x /opt/consul/scripts/registerusers.sh
 
-RUN chmod +x /opt/consul/registeractivities.sh
+RUN chmod +x /opt/consul/scripts/registeractivities.sh
 
 RUN apk add -u bash curl && \
     wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \
@@ -39,7 +35,5 @@ RUN apk add -u bash curl && \
     unzip /tmp/consul.zip -d /tmp && \
     mv /tmp/consul /usr/local/bin/consul && \
     rm -f /tmp/consul.zip
-
-# ENTRYPOINT [ "./opt/consul/registeractivities.sh" ]
 
 CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
