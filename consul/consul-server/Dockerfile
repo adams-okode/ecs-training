@@ -1,20 +1,7 @@
-#lol build
-# FROM consul:latest
-
-
-
-
-# COPY consul.hcl /etc/consul.d/consul.hcl
-# RUN mkdir /opt/consul
-# RUN chmod -R 777 /opt/consul
-# CMD [ "consul", "agent", "-config-file", "/etc/consul.d/consul.hcl" ]
-
-#lol build users
+# lol build users
 ARG ENVOY_VERSION=1.14-latest
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
-
-
 
 ARG CONSUL_VERSION=1.8.0
 

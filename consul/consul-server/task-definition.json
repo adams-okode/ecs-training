@@ -63,7 +63,6 @@
             "memoryReservation": 150,
             "volumesFrom": [],
             "stopTimeout": null,
-            "image": "853497131747.dkr.ecr.eu-west-1.amazonaws.com/consul-server:d146f053e511f6eeb65e42a079fe6d34e5fe2e6c",
             "startTimeout": null,
             "firelensConfiguration": null,
             "dependsOn": null,
