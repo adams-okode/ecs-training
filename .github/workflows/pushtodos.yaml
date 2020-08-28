@@ -1,0 +1,49 @@
+name: Building and pushing Todos docker image to Amazon ECR
+
+on:
+  push:
+    paths:
+      - todos/**
+    branches:
+      - build
+
+env:
+  AWS_DEFAULT_REGION: eu-west-1
+  AWS_DEFAULT_OUTPUT: json
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  CONTAINER_IMAGE: todos:${{ github.sha }}
+
+jobs:
+  build-and-push:
+    name: Building and pushing image to AWS ECR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Setup ECR
+        run: |
+          $( aws ecr get-login --no-include-email )
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Maven Package
+        run: |
+          cd todos
+          mvn -B clean package -DskipTests
+
+      - name: Build and tag the image
+        run: |
+          docker build \
+            -t $CONTAINER_IMAGE \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./todos
+
+      - name: Push
+        # if: github.ref == 'refs/heads/master'
+        run: |
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE

@@ -1,0 +1,75 @@
+{
+    "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+    "addresses": {
+        "http": "\($snadress)",
+        "grpc": "\($snadress)"
+    },
+    "data_dir": "/opt/consul",
+    "datacenter": "our_dc",
+    "retry_join": [
+        "172.31.13.201"
+    ],
+    "ports": {
+        "grpc": 8502,
+        "http": 8500,
+        "sidecar_max_port": 21005,
+        "sidecar_min_port": 21000
+    },
+    "enable_central_service_config": true,
+    "services": [
+        {
+            "check": [
+                {
+                    "http": "http://\($snadress):8080",
+                    "id": "todos-check",
+                    "interval": "5s",
+                    "method": "GET",
+                    "timeout": "3s"
+                }
+            ],
+            "connect": [
+                {
+                    "sidecar_service": [
+                        {
+                            "proxy": [
+                                {
+                                    "local_service_address": $snadress
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "id": "todos-1",
+            "name": "todos",
+            "port": 8080
+        },
+        {
+            "check": [
+                {
+                    "http": "http://\($snadress):8081",
+                    "id": "notifications-check",
+                    "interval": "5s",
+                    "method": "GET",
+                    "timeout": "3s"
+                }
+            ],
+            "connect": [
+                {
+                    "sidecar_service": [
+                        {
+                            "proxy": [
+                                {
+                                    "local_service_address": $snadress
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "id": "notifications-1",
+            "name": "notifications",
+            "port": 8081
+        }
+    ]
+}
