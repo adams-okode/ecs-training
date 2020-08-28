@@ -1,9 +1,9 @@
-name: Building and pushing Consul Server docker image to Amazon ECR
+name: Consul Server docker image to Amazon ECR
 
 on:
   push:
     paths:
-      - consul/consul-server/**  
+      - consul/consul-server/**
     branches:
       - build
 
@@ -38,7 +38,7 @@ jobs:
       - name: Push
         run: |
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
-      
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -53,7 +53,7 @@ jobs:
           task-definition: consul/consul-server/task-definition.json
           container-name: consul-server
           image: ${{ steps.build-image.outputs.image }}
-      
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
