@@ -15,14 +15,6 @@ Listeners = [
       }
     ]
   },
-  {
-    Port     = 8080
-    Protocol = "tcp"
-    Services = [
-      {
-        Name = "*"
-      }
-    ]
-  },
+  
  
 ]
