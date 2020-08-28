@@ -7,7 +7,7 @@ Name = "ingress-service"
 
 Listeners = [
   {
-    Port     = 8080
+    Port     = 80
     Protocol = "http"
     Services = [
       {
