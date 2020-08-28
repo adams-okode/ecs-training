@@ -1,4 +1,4 @@
-name: Building and pushing Consul Agent client for cluster 1 docker image to Amazon ECR
+name: Consul Agent client for cluster 1 docker image to Amazon ECR
 
 on:
   push:
@@ -14,7 +14,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   CONTAINER_IMAGE: consul-cluster-1:latest
-  
+
 jobs:
   build-and-push:
     name: Building and pushing image to AWS ECR
@@ -38,7 +38,7 @@ jobs:
       - name: Push To Amazon ECR
         run: |
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
-      
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -53,7 +53,7 @@ jobs:
           task-definition: consul/consul-cluster-1/task-definition.json
           container-name: consul-c1-proxy-agent
           image: ${{ steps.build-image.outputs.image }}
-      
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:

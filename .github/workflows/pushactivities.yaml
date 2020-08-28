@@ -1,12 +1,11 @@
-name: Building and pushing Activities docker image to Amazon ECR
+name: Activities docker image to Amazon ECR
 
 on:
   push:
     paths:
-      - activities/**  
+      - activities/**
     branches:
       - build
-
 
 env:
   AWS_DEFAULT_REGION: eu-west-1
@@ -14,7 +13,7 @@ env:
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  CONTAINER_IMAGE: activities:${{ github.sha }}
+  CONTAINER_IMAGE: activities:latest
 
 jobs:
   build-and-push:
@@ -39,12 +38,36 @@ jobs:
           mvn -B clean package -DskipTests
 
       - name: Build and tag the image
+        id: build-image
         run: |
           docker build \
             -t $CONTAINER_IMAGE \
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./activities
+          echo "::set-output name=image::$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE"
 
       - name: Push
-        # if: github.ref == 'refs/heads/master'
         run: |
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: activities/task-definition.json
+          container-name: activitie-final
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: activities-service
+          cluster: cluster-service-activities
+          wait-for-service-stability: true
