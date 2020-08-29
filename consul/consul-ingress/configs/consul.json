@@ -15,6 +15,5 @@
     "sidecar_max_port": 21005,
     "sidecar_min_port": 21000
   },
-  "enable_central_service_config": true,
-  "disable_host_node_id": true
+  "enable_central_service_config": true
 }
