@@ -12,7 +12,7 @@ Listeners = [
     Protocol = "http"
     Services = [
       {
-        Name = "users"
+        Name = "*"
       }
     ]
   }
