@@ -17,19 +17,9 @@
             "entryPoint": null,
             "portMappings": [
                 {
-                    "hostPort": 8500,
+                    "hostPort": 8300,
                     "protocol": "tcp",
-                    "containerPort": 8500
-                },
-                {
-                    "hostPort": 8600,
-                    "protocol": "udp",
-                    "containerPort": 8600
-                },
-                {
-                    "hostPort": 8502,
-                    "protocol": "tcp",
-                    "containerPort": 8502
+                    "containerPort": 8300
                 },
                 {
                     "hostPort": 8301,
@@ -37,9 +27,34 @@
                     "containerPort": 8301
                 },
                 {
-                    "hostPort": 8300,
+                    "hostPort": 8301,
+                    "protocol": "udp",
+                    "containerPort": 8301
+                },
+                {
+                    "hostPort": 8501,
                     "protocol": "tcp",
-                    "containerPort": 8300
+                    "containerPort": 8501
+                },
+                {
+                    "hostPort": 8502,
+                    "protocol": "tcp",
+                    "containerPort": 8502
+                },
+                {
+                    "hostPort": 8500,
+                    "protocol": "tcp",
+                    "containerPort": 8500
+                },
+                {
+                    "hostPort": 8600,
+                    "protocol": "tcp",
+                    "containerPort": 8600
+                },
+                {
+                    "hostPort": 21000,
+                    "protocol": "tcp",
+                    "containerPort": 21000
                 }
             ],
             "command": [],
