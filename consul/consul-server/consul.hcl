@@ -15,7 +15,7 @@ connect {
   enabled = true
 }
 bind_addr = "{{GetInterfaceIP \"eth0\"}}"
-disable_host_node_id = true
+
 
 // auto_encrypt = {
 //   allow_tls = true
