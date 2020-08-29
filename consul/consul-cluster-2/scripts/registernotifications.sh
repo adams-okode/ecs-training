@@ -3,7 +3,7 @@ SERVICE="notifications"
 
 OUR_SERVER_ADDRESS=$(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 
-# Collect sample json file
+# Collect sample json file remove auto
 SAMPLE_FILE=$(cat ./opt/consul/configs/config.mapper.json)
 
 # Read in template one line at the time, and replace variables (more natural (and efficient) way, thanks to Jonathan Leffler).
