@@ -17,7 +17,7 @@ RUN mkdir -p /opt/consul  \
 
 COPY consul.hcl /etc/consul.d/consul.hcl
 
-# remove 
+# remove reboot
 
 RUN apk add -u bash curl && \
     wget https://releases.hashicorp.com/consul/"${CONSUL_VERSION}"/consul_"${CONSUL_VERSION}"_linux_amd64.zip \

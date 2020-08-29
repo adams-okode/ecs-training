@@ -3,7 +3,7 @@
 # Set variables
 OUR_SERVER_ADDRESS=$(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 
-# Collect sample json file 
+# Collect sample json file reboot
 # retry users
 SAMPLE_FILE=$(cat ./opt/consul/configs/consul.sample.json)
 
