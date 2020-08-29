@@ -10,7 +10,7 @@ JSON_STRING=$(jq -n --arg snadress "$OUR_SERVER_ADDRESS" "$SAMPLE_FILE")
 
 echo $JSON_STRING >> /etc/consul.d/consul.json
 
-# Initialize the consul agent whats up? reboot
+# Initialize the consul agent whats up? 
 # envoy -c /etc/envoy/envoy.yaml
 
 consul agent -config-file /etc/consul.d/consul.json
