@@ -12,8 +12,8 @@ Listeners = [
     Protocol = "http"
     Services = [
       {
-        Name = "*"
+        Name = "users"
       }
     ]
-  },
+  }
 ]
