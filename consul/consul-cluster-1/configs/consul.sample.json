@@ -9,6 +9,16 @@
     "retry_join": [
         "172.31.13.201"
     ],
+    "verify_incoming": false,
+    "verify_outgoing": true,
+    "verify_server_hostname": true,
+    "ca_file": "/opt/consul/configs/consul-agent-ca.pem",
+    "encrypt": "HljxUhiZ7ig9t5cSBDzBll35uOPEB11FSSkOd8jGUyM=",
+    "encrypt_verify_incoming": false,
+    "encrypt_verify_outgoing": false,
+    "auto_encrypt": {
+        "tls": true
+    },
     "ports": {
         "grpc": 8502,
         "http": 8500,
@@ -33,7 +43,16 @@
                         {
                             "proxy": [
                                 {
-                                    "local_service_address": $snadress
+                                    "local_service_address": $snadress,
+                                    "upstreams": [
+                                        {
+                                            "destination_type": "service",
+                                            "destination_name": "todos",
+                                            "datacenter": "our_dc",
+                                            "local_bind_address": $snadress,
+                                            "local_bind_port": 1234
+                                        }
+                                    ]
                                 }
                             ]
                         }
