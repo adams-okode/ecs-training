@@ -1,4 +1,4 @@
-# lol build users
+# rebuild server
 ARG ENVOY_VERSION=1.14-latest
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
