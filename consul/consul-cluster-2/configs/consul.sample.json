@@ -33,7 +33,16 @@
                         {
                             "proxy": [
                                 {
-                                    "local_service_address": $snadress
+                                    "local_service_address": $snadress,
+                                    "upstreams": [
+                                        {
+                                            "destination_type": "service",
+                                            "destination_name": "users",
+                                            "datacenter": "our_dc",
+                                            "local_bind_address": $snadress,
+                                            "local_bind_port": 1234
+                                        }
+                                    ]
                                 }
                             ]
                         }
