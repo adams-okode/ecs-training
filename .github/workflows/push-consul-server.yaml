@@ -60,4 +60,3 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: consule-server-service
           cluster: consul-server-cluster
-          wait-for-service-stability: true
