@@ -1,4 +1,5 @@
 # Building and Dockerizing Spring Data Rest Application
+
 ## Introduction
 
 In this article we will describe a simple approach to implementing a simple Rest API in spring boot and automate its deployment.
@@ -180,9 +181,10 @@ public class User {
 
 }
 ```
-## Set up Repository / DAO(Data Access Object)
-
+## Set up Repository / DAO (Data Access Object)
+A repository acts as an interface between the business logic and business objects(entities) to allow  writes, reads and updates to the database.
 Within the repositories folder create UserRepository.java file and modify as below.
+
 ```java
 package com.aws.{your_packaging}.repo;
 
@@ -199,7 +201,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 Spring data rest generates a CRUD rest resource automatically for each defined JPARepository.
 It is possible to override the default paths at the controller level and pass this through some self defined business logic.
-Spring data rest implements HATEOAS standard on the response data by default.
+Spring data rest implements [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS#:~:text=Hypermedia%20as%20the%20Engine%20of,provide%20information%20dynamically%20through%20hypermedia.) standard on the response data by default.
 Below are a few available configs to allow you handle your REST methods
 
 ```java
@@ -223,17 +225,26 @@ spring.data.rest.detection-strategy=visibility
 <dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-ui</artifactId>
-    <version>1.4.5</version>
+    <version>{get latest version from springdoc}</version>
 </dependency>
 ```
 The UI is by default documented on swagger, which is quite good for development purposes, default path can be accessed at http://{url}/swagger-ui.html.
 
 ## Dockerizing the Application
-Dockerizing Springboot applications is quite simple and requires minimal steps, We'll take advantage of the  below is a sample.
+For this step  you need to have both docker and docker compose installed on your server or local computer.
+
+You can find the tutorial on
+[docker windows][1], [docker mac][2], [docker linux (Debian and Ubuntu)][3]  and [ docker compose ][4]
+
+[1]: https://docs.docker.com/docker-for-windows/install/ "Docker windows Set up "
+[2]: https://docs.docker.com/docker-for-mac/ "Docker mac Set up "
+[3]: https://runnable.com/docker/install-docker-on-linux "Docker linux Set up "
+[4]: https://docs.docker.com/compose/install/ "Docker Compose Install"
+
+Dockerizing Springboot applications is quite simple and requires minimal steps, We'll take advantage of the below sample.
 ```docker
 # Start with a base image containing Java runtime/ Replace with respective java version
 FROM openjdk:8-jdk-alpine
-
 
 # Add Maintainer Info
 LABEL maintainer="your@email.com"
@@ -253,4 +264,9 @@ ADD ${JAR_FILE} {app_name}.jar
 # Run the jar file 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/{app_name}.jar"]
 ```
+
+## Push to docker hub
+Open a free account on [docker hub](https://hub.docker.com/) 
+
+
 
