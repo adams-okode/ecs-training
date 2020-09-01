@@ -14,7 +14,6 @@ RUN mkdir -p /opt/consul  \
     && chmod -R 777 /etc/consul.d \
     && chmod -R 777 /var/logs
 
-
 COPY consul.hcl /etc/consul.d/consul.hcl
 
 # remove reboot
