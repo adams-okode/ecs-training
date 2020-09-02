@@ -15,5 +15,8 @@
     "sidecar_max_port": 21005,
     "sidecar_min_port": 21000
   },
-  "enable_central_service_config": true
+  "enable_central_service_config": true,
+  "encrypt": "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE=",
+  "encrypt_verify_incoming": false,
+  "encrypt_verify_outgoing": false
 }
