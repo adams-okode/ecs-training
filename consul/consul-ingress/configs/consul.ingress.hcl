@@ -1,10 +1,7 @@
 Kind = "ingress-gateway"
 Name = "ingress-service"
 
-// TLS {
-//  Enabled = true
-// reboot
-// }
+
 
 Listeners = [
   {
