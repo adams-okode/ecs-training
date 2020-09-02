@@ -12,6 +12,12 @@
     "encrypt": "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE=",
     "encrypt_verify_incoming": true,
     "encrypt_verify_outgoing": true,
+    "verify_incoming": false,
+    "verify_outgoing": true,
+    "ca_file": "/opt/consul/configs/consul-agent-ca.pem",
+    "auto_encrypt": {
+        "tls": true
+    },
     "ports": {
         "grpc": 8502,
         "http": 8500,
