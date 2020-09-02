@@ -1,5 +1,5 @@
 
-#lol build ingress rebuid ingress
+#lol build ingress rebuid ingress wrong key
 ARG ENVOY_VERSION=1.14-latest
 
 FROM envoyproxy/envoy-alpine:v${ENVOY_VERSION}
