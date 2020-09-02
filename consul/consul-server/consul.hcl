@@ -1,13 +1,13 @@
 datacenter = "our_dc"
 data_dir = "/opt/consul"
-// verify_incoming = true
-//verify_outgoing = true
+verify_incoming = true
+verify_outgoing = true
 
 
 
-// ca_file = "consul-agent-ca.pem"
-// cert_file = "our_dc-server-consul-0.pem"
-// key_file = "our_dc-server-consul-0-key.pem"
+ca_file = "/opt/consul/security/consul-agent-ca.pem"
+cert_file = "/opt/consul/security/our_dc-server-consul-0.pem"
+key_file = "/opt/consul/security/our_dc-server-consul-0-key.pem"
 
 encrypt = "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE="
 encrypt_verify_incoming = true
@@ -28,9 +28,9 @@ connect {
 
 bind_addr = "{{GetInterfaceIP \"eth0\"}}"
 
-//auto_encrypt = {
-  // allow_tls = true
-// }
+auto_encrypt = {
+   allow_tls = true
+}
 
 // acl = {
 //   enabled = true
