@@ -60,4 +60,4 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: consul-ingress-service
           cluster: consul-ingress
-          wait-for-service-stability: true
+          # wait-for-service-stability: true

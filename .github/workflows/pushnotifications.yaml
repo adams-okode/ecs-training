@@ -70,4 +70,4 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: notification-service
           cluster: consul-cluster-2
-          wait-for-service-stability: true
+          # wait-for-service-stability: true

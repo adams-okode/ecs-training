@@ -10,7 +10,7 @@ data_dir = "/opt/consul"
 // key_file = "our_dc-server-consul-0-key.pem"
 
 encrypt = "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE="
-encrypt_verify_incoming = false
+encrypt_verify_incoming = true
 encrypt_verify_outgoing = true
 
 bootstrap_expect = 1
