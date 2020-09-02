@@ -15,7 +15,7 @@
     // "ca_file": "/opt/consul/configs/consul-agent-ca.pem",
     "encrypt": "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE=",
     "encrypt_verify_incoming": false,
-    "encrypt_verify_outgoing": false,
+    "encrypt_verify_outgoing": true,
     // "auto_encrypt": {
     //     "tls": true
     // },
