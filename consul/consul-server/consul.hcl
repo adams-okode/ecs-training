@@ -11,7 +11,7 @@ data_dir = "/opt/consul"
 
 encrypt = "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE="
 encrypt_verify_incoming = false
-encrypt_verify_outgoing = false
+encrypt_verify_outgoing = true
 
 bootstrap_expect = 1
 ui = true
