@@ -8,9 +8,9 @@ data_dir = "/opt/consul"
 // cert_file = "our_dc-server-consul-0.pem"
 // key_file = "our_dc-server-consul-0-key.pem"
 
-// encrypt = "HljxUhiZ7ig9t5cSBDzBll35uOPEB11FSSkOd8jGUyM="
-// encrypt_verify_incoming = false
-// encrypt_verify_outgoing = false
+encrypt = "NAqHX3HUULRuxRPSdzFAQgxpnsXxgks1VeUj4XOP1JE="
+encrypt_verify_incoming = false
+encrypt_verify_outgoing = false
 
 bootstrap_expect = 1
 ui = true
