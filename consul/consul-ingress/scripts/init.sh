@@ -1,6 +1,6 @@
 #!/bin/sh
 # Set variables
-OUR_SERVER_ADDRESS=$(ip addr show wlp2s0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
+OUR_SERVER_ADDRESS=$(ip addr show eth0 | grep -o "inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 
 # Collect sample json file
 SAMPLE_FILE=$(cat ./opt/consul/configs/consul.json)
