@@ -35,5 +35,5 @@ RUN apk add -u bash curl && \
     mv /tmp/consul /usr/local/bin/consul && \
     rm -f /tmp/consul.zip
 
-# CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
