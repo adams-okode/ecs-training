@@ -3,8 +3,6 @@ data_dir = "/opt/consul"
 verify_incoming = true
 verify_outgoing = true
 
-
-
 ca_file = "/opt/consul/security/consul-agent-ca.pem"
 cert_file = "/opt/consul/security/our_dc-server-consul-0.pem"
 key_file = "/opt/consul/security/our_dc-server-consul-0-key.pem"
@@ -37,5 +35,4 @@ auto_encrypt = {
 //   default_policy = "deny"
 //   enable_token_persistence = true
 // }
- 
-//lol lol
+
