@@ -1,49 +1,65 @@
-# Service Mesh in Consul
 # Introduction
 
-Microservices have for quite some time been positioned as a solution for monolithic codebases. And to some extent yes they are, But are monoliths necessarily a problem? Well not really it depends on the use case. Its a common school of thought that microservices will solve our scaling problems, and yes this is true if done correctly.
+Its a common school of thought that microservices will solve our scaling problems, and yes this is true if done correctly. Microservice architecture can be termed as a variant of the service-oriented architecture (SOA) structural style that arranges an application as a collection of loosely coupled services. In a microservices architecture, services are usually quite fine-grained and the protocols are lightweight to ensure fast communication. There is no single definition for a microservice, However there are some key defining characteristics of microservices.
 
-With microservice architectures, a dependency on a network becomes quite key and raises reliability questions. As the number of services increase, you'll have to deal with the interactions between them, monitor the services individual system health, the network should be fault tolerant, have system wide logging and telemetry in place, handle multiple points of failure, and much more. All the services needs to have these common functionalities in place to allow smooth and reliable service to service communication. 
+- are organized around business functionality
+- are language agnostic
+- are self contained 
+- are small in size, message-enabled
 
-__Service Mesh__
+More information on microservices can be found on [Martin Fowler's Blog on Microservices](https://martinfowler.com/articles/microservices.html#MicroservicesAndSoa).
 
-A service mesh, is an extra layer that allows different services to share data with one another, and in turn reduces microservice complexity.
+With microservice architectures, dependency on a network becomes quite key and raises reliability questions. As the number of services increase, you'll find that you have to deal with the interactions between them, monitor the system wide health (across all services), the network should be fault tolerant, have system wide logging and telemetry in place, handle multiple points of failure, and a lot more. All the services needs to have these common functionalities in place to allow smooth and reliable service to service communication. 
 
-__Why do we need a Service Mesh__
+__What is a Service Mesh ?__
 
-Interservice communication is one of the most challenging aspects of microservice architecture. Netflix being a notable success story in implementation of microservice architecture, have in turn contributed a wealth of resource to tackling the affir mention problems examples being eureka(service discovery), cloud sleuth(distriuted tracing), ribbon(load balancing) [and more](https://spring.io/projects/spring-cloud). However most of these tools are language specific. With containerization taking a forefront and becoming more popular within microservice deployments, a more language agnostic solution becomes more inherent.
+A service mesh, is an extra layer that allows different services to share data amongst  themselves, and in turn should reduce microservice complexity. Unlike other solutions that manage interservice communication, a service mesh is a dedicated infrastructure layer that is built right into an app ([sidecar pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar)).
 
-__What is Envoy__
-Envoy project started out at Lyft sometime in 2015, as mentioned in their [blog](https://blog.envoyproxy.io/envoy-graduates-a6f71879852e) the company was struggling to stabilize its rapidly growing microservice distributed architecture. Envoy quickly became an integral to the scaling of Lyft’s architecture. Soon after envoy was released as OSS and saw a large growth in the community.
-Envoy is heavily used to implement extensible sidecar proxy within the service mesh architecture.
+__Why do we need a Service Mesh ?__
 
-A sidecar proxy is an application design pattern which abstracts functionality that is not key to the business logic away from the main architecture to ease the tracking and maintenance of the application as a unit, these include 
+Interservice communication is one of the most challenging aspects of microservice architectures. Netflix being a notable success story within the implementation of microservice architectures, have in turn contributed a wealth of resources to tackling the affir mention problem, examples being eureka(service discovery), cloud sleuth(distriuted tracing), ribbon(load balancing) [and many more](https://spring.io/projects/spring-cloud). However most of these tools are language specific.
+
+With containerization taking a forefront and becoming more popular within microservice deployments, a more language agnostic solution becomes more inherent.
+
+__What is Envoy?__
+
+Before we move into actual solutions to service meshes we need to understand what Envoy is and the fuss around it.
+ 
+[Envoy](https://www.envoyproxy.io/docs/envoy/latest/intro/what_is_envoy#:~:text=Envoy%20is%20an%20L7%20proxy,out%20of%20the%20belief%20that%3A&text=All%20of%20the%20Envoys%20form,unaware%20of%20the%20network%20topology.) is an OSI Layer 7 proxy & communication bus that has been designed for large modern service oriented architectures.
+
+Envoy project started out at Lyft sometime in 2015, as mentioned in their [blog](https://blog.envoyproxy.io/envoy-graduates-a6f71879852e), the company was struggling to stabilize it's rapidly growing microservice distributed architecture. Envoy quickly became an integral to the scaling of Lyft’s architecture. Soon after envoy was released as OSS and saw a large growth in the community.
+
+_How is Envoy used ?_
+
+Envoy is heavily used to implement extensible sidecar proxies within the service mesh architecture.
+
+A sidecar proxy is an application design pattern which abstracts functionality that is not key to the business logic away from the main architecture to ease the tracking and maintenance of the application as a unit, these include;
 - service-service communications, 
 - monitoring(health checks) and security
 - logging
 
 A sidecar proxy is by default attached to a parent application to extend or add functionality hence the name sidecar.
 
-As mentioned envoy is widely used to implemented sidecar proxies im most production implementation due to a host of reason among the top being its Extensibility evident from the exsistence of multiple extension points as well as it Rich configuration API to mention a few.
+As mentioned envoy is widely used to implemented sidecar proxies in most production implementation due to a host of reasons, among the top being its Extensibility evident from the exsistence of multiple extension points as well as it's Rich configuration API just to mention a few.
 
 __Consul__
 
-Consul is a distributed highly available and data center aware solution to connect and Configure applications across dynamic, distributed infrasctructure. Put simply consul is a service mesh solution offering add on integrations to hashicorps vast ecosystem of DevOps tools, other service meshes include Istio, Linkerd, and Citrix ADC.
+[Consul](https://www.consul.io/) is a distributed highly available and data center aware solution to connect and Configure applications across dynamic, distributed infrasctructure. Put simply consul is a service mesh solution offering add on integrations to [HashiCorp's](https://www.hashicorp.com/) vast ecosystem of DevOps tools, other service meshes include Istio, Linkerd, and Citrix ADC.
 
 Consul comes with a simple built-in proxy to allow rapid out of the box configuration, it however also supports 3rd party proxy integrations such as Envoy.
 
 ***Why Consul ?***      
 - Multi Datacenter Aware
-- Service Mesh / Segmentations 
-- Service Discovery
-- Service health Checking
-- Key/Value Storage for system wide dynamic configurations  
+- [Service Mesh / Segmentations](https://www.consul.io/docs/connect) 
+- [Service Discovery - auto detection of new service and location](https://www.consul.io/docs/discovery/services)
+- [Service health Checking - Consul provides a dashboard to visualize the health of all sidecar proxies, nodes, services]()
+- [Key/Value Storage for system wide dynamic configurations](https://www.consul.io/docs/dynamic-app-config/kv)
 
 __Consul Architecture__
 
 ![Architecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-dc-architecture.png)
 
-As seen from the above image we have a mixture of clients and servers within the data center. It is expected that there should be between 3-5 servers. This balances out availability in the case of failure and performance, since the consensus algorithm gets progressively slower as more machines are added. There is no limit however to the number of clients. The default architecture works by the using [raft algorithm](https://raft.github.io/), which helps us in electing a leader out of the three different consul servers. 
+As seen from the above image we have a mixture of clients and servers within the data center. It is expected that there should be between 3-5 servers. This balances out availability in the case of failure and performance, since the consensus algorithm gets progressively slower as more nodes are added. There is no limit however to the number of clients you can have. The default architecture works by using the [raft algorithm](https://raft.github.io/), which helps us in electing a leader out of the three different consul servers. 
 
 
 # Working Example on Amazon ECS
@@ -52,19 +68,20 @@ __Prerequisites__
 - Some Level of understanding of Bash Scripting
 - Some Level of Containerization and Networking
 
-![Working Arhitecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-architecture.png)
+![Working Architecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-architecture.png)
 The pattern follows a multi-cluster deployment scheme implemented on top of Amazon ECS.
 
-ECS is the AWS Docker container service that handles the orchestration and provisioning of Docker containers.
+ECS is the AWS container service that handles the orchestration and provisioning of Docker containers.
 
-> The step By step guide will require knowledge in setting up ECS clusters For more information on cluster creation and configuration refer to this [tutorial on Medium by Tung Nguyen](https://medium.com/boltops/gentle-introduction-to-how-aws-ecs-works-with-example-tutorial-cea3d27ce63d).
+> This step by step guide will require knowledge in setting up ECS clusters For more information on cluster creation and configuration refer to this [tutorial on Medium by Tung Nguyen](https://medium.com/boltops/gentle-introduction-to-how-aws-ecs-works-with-example-tutorial-cea3d27ce63d).
 
 ## Service Set up 
-The project has 4 services implemented in spring-boot, these are dockerized to allow deployment on the proposed architecture. The service are language agnostic and can be implemented in framework of choice.
-according to the architecture diagram Cluster 1 & Cluster 2  that run 2 services each. The clusters each run an extra service i.e. the consul agent. 
+The project has 4 services implemented in spring-boot, these are dockerized to allow deployment on the proposed architecture. The services are language agnostic and can be implemented in any framework/language of choice.
+According to the architecture diagram Cluster 1 & Cluster 2  run 2 services each. The clusters each run an extra service i.e. the consul agent. 
 The deployment has a cluster dedicated to the ingress gateway and another for the server instances.
 
-### Summary of Consul & Service Mesh Terms
+__Summary of Consul & Service Mesh Terms__
+
 - Consul agent - The Consul agent is the core process of Consul. The agent maintains membership information, registers services, runs checks, responds to queries, and more. The agent must run on every node that is part of a Consul cluster.
 
 - Service Mesh - A service mesh, is a way to control how different parts of an application share data with one another. Unlike other systems for managing this communication, a service mesh is a dedicated infrastructure layer built right into an app. This visible infrastructure layer can document how well (or not) different parts of an app interact, so it becomes easier to optimize communication and avoid downtime as an app grows.
