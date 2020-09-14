@@ -68,7 +68,7 @@ __Prerequisites__
 - Some Level of understanding of Bash Scripting
 - Some Level of Containerization and Networking
 
-![Working Architecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-architecture.png)
+![Working Architecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-architecture-update.png)
 The pattern follows a multi-cluster deployment scheme implemented on top of Amazon ECS.
 
 ECS is the AWS container service that handles the orchestration and provisioning of Docker containers.
