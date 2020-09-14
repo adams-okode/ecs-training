@@ -37,34 +37,22 @@ Consul comes with a simple built-in proxy to allow rapid out of the box configur
 - Service Mesh/ Segmentations 
 - Service Discovery
 - Service health Checking
-- Key/Value Storage for system wide dynamic configurations                                            
-  
-# Concepts
-- Microservices
-- Containerization
-- CI/CD
+- Key/Value Storage for system wide dynamic configurations  
 
-# Tools Used
-- Docker
-- AWS (ECS, EC2, ECR)
-- Consul
-- Spring Boot
-- Github Actions
+__Consul Architecture__
 
-# Architecture
-![Architecture](docs/consul-architecture.png)
+![Architecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-dc-architecture.png)
 
+As seen from the above image we have a mixture of clients and servers within the data center. It is expected that there should be between 3-5 servers. This balances out availability in the case of failure and performance, since the consensus algorithm gets progressively slower as more machines are added. There is no limit however to the number of clients. The default architecture works by the using [raft algorithm](https://raft.github.io/), which helps us in electing a leader out of the three different consul servers. 
+
+
+# Working Example
+![Working Arhitecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-architecture.png)
 The pattern follows a multi-cluster deployment scheme implemented on top of Amazon ECS.
 
 ECS is the AWS Docker container service that handles the orchestration and provisioning of Docker containers.
 
-### Summary of the ECS Terms
-First we need to cover some of the key ECS terminology before we get started:
-- Task Definition - This a blueprint that describes how a docker container should launch. It contains settings like exposed port, docker image, cpu shares, memory requirement, command to run and environmental variables.
-- Task — This is a running container with the settings defined in the Task Definition. It can be thought of as an “instance” of a Task Definition.
-- Service — Defines long running tasks of the same Task Definition.
-- Cluster — A logic group of EC2 instances. When an instance launches the ecs-agent software on the server registers the instance to an ECS Cluster. 
-- Container Instance — This is just an EC2 instance that is part of an ECS Cluster and has docker and the ecs-agent running on it.
+> The step By step guide will require knowledge in setting up ECS clusters For more information on cluster creation and configuration refer to this [tutorial on Medium by Tung Nguyen](https://medium.com/boltops/gentle-introduction-to-how-aws-ecs-works-with-example-tutorial-cea3d27ce63d).
 
 ## Service Set up 
 The project has 4 services implemented in spring-boot, these are dockerized to allow deployment on the proposed architecture. The service are language agnostic and can be implemented in framework of choice.
@@ -81,6 +69,7 @@ The deployment has a cluster dedicated to the ingress gateway and another for th
 - Ingress Gateway - An ingress Gateway describes a load balancer operating at the edge of the mesh that receives incoming HTTP/TCP connections.
 
 # Step By Step Implementation Guide
+
 ## Cluster Definition
 
 We should create and configure 4 ECS clusters 
@@ -88,13 +77,12 @@ We should create and configure 4 ECS clusters
 2. Cluster 2 - contains S3 and S4
 3. Consul Server Cluster
 4. Ingress Cluster
-   
-   For more information on cluster creation and configuration refer to this [tutorial by Tung Nguyen](https://medium.com/boltops/gentle-introduction-to-how-aws-ecs-works-with-example-tutorial-cea3d27ce63d).
 
-> note that this takes a multicluster approach , you do not necessarily have to run it as explained there are plenty of other approaches to consider.Using resources as defined in this guide can be quite costly to mantain, hence ensure that you subscribe to the AWS free tier if you are using this tutorial for learning purposes.
 
-## Counsul Server Set Up
-Once the Consul Server Cluster is created we should now define the consul -server-service.
+> note that this takes a multicluster approach, you don't have necessarily to run it as explained there are plenty of other approaches to consider. Using resources as defined in this guide can be quite costly to mantain, hence ensure that you subscribe to the AWS free tier if you are using this tutorial for learning purposes.
+
+## Consul Server Set Up
+Once the Consul Server Cluster is created we should now define the consul-server-service.
 First things first we need to have the consul server image on ECR. 
 We'll define a custom consul image that embeds envoy proxy that consul uses to implement the sidecar on .
 below is a sample customized Dockerfile of this.
@@ -151,7 +139,6 @@ connect {
   enabled = true
 }
 
-
 bind_addr = "{{GetInterfaceIP \"eth0\"}}"
 
 auto_encrypt = {
@@ -159,148 +146,16 @@ auto_encrypt = {
 }
 ```
 Push this to ECR and create a task definition for this 
-below is asample of task definition withj exporsable ports as well a volume mount-points.
->Please do not blindly copy paste, rather map settings according to your defined task
-```json
-{
-    "ipcMode": null,
-    "executionRoleArn": "arn:aws:iam::{user-id}:role/{role}",
-    "containerDefinitions": [
-        {
-            "dnsSearchDomains": null,
-            "environmentFiles": null,
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "secretOptions": null,
-                "options": {
-                    "awslogs-group": "/ecs/consul-ecs-builder",
-                    "awslogs-region": "eu-west-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            },
-            "entryPoint": null,
-            "portMappings": [
-                {
-                    "hostPort": 8300,
-                    "protocol": "tcp",
-                    "containerPort": 8300
-                },
-                {
-                    "hostPort": 8301,
-                    "protocol": "tcp",
-                    "containerPort": 8301
-                },
-                {
-                    "hostPort": 8301,
-                    "protocol": "udp",
-                    "containerPort": 8301
-                },
-                {
-                    "hostPort": 8501,
-                    "protocol": "tcp",
-                    "containerPort": 8501
-                },
-                {
-                    "hostPort": 8502,
-                    "protocol": "tcp",
-                    "containerPort": 8502
-                },
-                {
-                    "hostPort": 8500,
-                    "protocol": "tcp",
-                    "containerPort": 8500
-                },
-                {
-                    "hostPort": 8600,
-                    "protocol": "tcp",
-                    "containerPort": 8600
-                },
-                {
-                    "hostPort": 21000,
-                    "protocol": "tcp",
-                    "containerPort": 21000
-                }
-            ],
-            "command": [],
-            "linuxParameters": null,
-            "cpu": 0,
-            "environment": [],
-            "resourceRequirements": null,
-            "ulimits": null,
-            "dnsServers": null,
-            "mountPoints": [
-                {
-                    "readOnly": null,
-                    "containerPath": "/opt/consul",
-                    "sourceVolume": "consul"
-                }
-            ],
-            "workingDirectory": null,
-            "secrets": null,
-            "dockerSecurityOptions": null,
-            "memory": null,
-            "memoryReservation": 150,
-            "volumesFrom": [],
-            "stopTimeout": null,
-            "startTimeout": null,
-            "firelensConfiguration": null,
-            "dependsOn": null,
-            "disableNetworking": null,
-            "interactive": null,
-            "healthCheck": null,
-            "essential": true,
-            "links": null,
-            "hostname": null,
-            "extraHosts": null,
-            "pseudoTerminal": null,
-            "user": null,
-            "readonlyRootFilesystem": null,
-            "dockerLabels": null,
-            "systemControls": null,
-            "privileged": null,
-            "name": "consul-server"
-        }
-    ],
-    "placementConstraints": [],
-    "memory": null,
-    "taskRoleArn": "arn:aws:iam::{user-id}:role/{role}",
-    "compatibilities": [
-        "EC2"
-    ],
-    "taskDefinitionArn": "arn:aws:ecs:eu-west-1:{user-id}:task-definition/consul-ecs-builder:26",
-    "family": "consul-ecs-builder",
-    "requiresAttributes": [
+here is a [sample](https://github.com/adams-okode/ecs-training/blob/build/consul/consul-server/task-definition.json) 
+of task definition with exposable ports as well a volume mount-points.
 
-    ],
-    "pidMode": null,
-    "requiresCompatibilities": [
-        "EC2"
-    ],
-    "networkMode": "host",
-    "cpu": null,
-    "revision": 26,
-    "status": "ACTIVE",
-    "inferenceAccelerators": null,
-    "proxyConfiguration": null,
-    "volumes": [
-        {
-            "efsVolumeConfiguration": null,
-            "name": "consul",
-            "host": {
-                "sourcePath": null
-            },
-            "dockerVolumeConfiguration": null
-        }
-    ]
-}
-```
 Consul will communicate to agents on the eth0 interface which provides host IP on the registered vpc this is evident from;
 
 ```h 
 bind_addr = "{{GetInterfaceIP \"eth0\"}}"
 ``` 
 
-It is crucial to ensure that you run your task in host network mode or use vxLan to allow the consul container access other hosts within the network.
+It is crucial to ensure that you run the task in host network mode or use vxLan to allow the consul container access other hosts within the network.
 
 Create an ECS service to run the tasks automatically. Once the tasks are active you should be able to view the cosul dashboard by accessing the node IP on port 8500 
 http://ip:8500/
