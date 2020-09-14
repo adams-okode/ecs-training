@@ -1,7 +1,38 @@
+# Service Mesh in Consul
 # Introduction
 
-Consul is a distributed highly available and data center aware solution to connect and Configure applications across dynamic, distributed infrasctructure.
-Why Consul ?      
+Microservices have for quite some time been positioned as a solution for monolithic codebases. And to some extent yes they are, But are monoliths necessarily a problem? Well not really it depends on the use case. Its a common school of thought that microservices will solve our scaling problems, and yes this is true if done correctly.
+
+With microservice architectures, a dependency on a network becomes quite key and raises reliability questions. As the number of services increase, you'll have to deal with the interactions between them, monitor the services individual system health, the network should be fault tolerant, have system wide logging and telemetry in place, handle multiple points of failure, and much more. All the services needs to have these common functionalities in place to allow smooth and reliable service to service communication. 
+
+__Service Mesh__
+
+A service mesh, is an extra layer that allows different services to share data with one another, and in turn reduces microservice complexity.
+
+__Why do we need a Service Mesh__
+
+Interservice communication is one of the most challenging aspects of microservice architecture. Netflix being a notable success story in implementation of microservice architecture, have in turn contributed a wealth of resource to tackling the affir mention problems examples being eureka(service discovery), cloud sleuth(distriuted tracing), ribbon(load balancing) [and more](https://spring.io/projects/spring-cloud). However most of these tools are language specific. With containerization taking a forefront and becoming more popular within microservice deployments, a more language agnostic solution becomes more inherent.
+
+__What is Envoy__
+Envoy project started out at Lyft sometime in 2015, as mentioned in their [blog](https://blog.envoyproxy.io/envoy-graduates-a6f71879852e) the company was struggling to stabilize its rapidly growing microservice distributed architecture. Envoy quickly became an integral to the scaling of Lyft’s architecture. Soon after envoy was released as OSS and saw a large growth in the community.
+Envoy is heavily used to implement extensible sidecar proxy within the service mesh architecture.
+
+A sidecar proxy is an application design pattern which abstracts functionality that is not key to the business logic away from the main architecture to ease the tracking and maintenance of the application as a unit, these include 
+- service-service communications, 
+- monitoring(health checks) and security
+- logging
+
+A sidecar proxy is by default attached to a parent application to extend or add functionality hence the name sidecar.
+
+As mentioned envoy is widely used to implemented sidecar proxies im most production implementation due to a host of reason among the top being its Extensibility evident from the exsistence of multiple extension points as well as it Rich configuration API to mention a few.
+
+__Consul__
+
+Consul is a distributed highly available and data center aware solution to connect and Configure applications across dynamic, distributed infrasctructure. Put simply consul is a service mesh solution offering add on integrations to hashicorps vast ecosystem of DevOps tools, other service meshes include Istio, Linkerd, and Citrix ADC.
+
+Consul comes with a simple built-in proxy to allow rapid out of the box configuration, it however also supports 3rd party proxy integrations such as Envoy.
+
+***Why Consul ?***      
 - Multi Datacenter Aware
 - Service Mesh/ Segmentations 
 - Service Discovery
@@ -23,7 +54,7 @@ Why Consul ?
 # Architecture
 ![Architecture](docs/consul-architecture.png)
 
-The deployment pattern follows a a multi-cluster deployment scheme implemented on top of AWS ECS.
+The pattern follows a multi-cluster deployment scheme implemented on top of Amazon ECS.
 
 ECS is the AWS Docker container service that handles the orchestration and provisioning of Docker containers.
 
@@ -51,10 +82,11 @@ The deployment has a cluster dedicated to the ingress gateway and another for th
 
 # Step By Step Implementation Guide
 ## Cluster Definition
+
 We should create and configure 4 ECS clusters 
 1. Cluster 1 - contains S1 and S2
 2. Cluster 2 - contains S3 and S4
-3. Counsul Server Cluster
+3. Consul Server Cluster
 4. Ingress Cluster
    
    For more information on cluster creation and configuration refer to this [tutorial by Tung Nguyen](https://medium.com/boltops/gentle-introduction-to-how-aws-ecs-works-with-example-tutorial-cea3d27ce63d).
@@ -66,6 +98,7 @@ Once the Consul Server Cluster is created we should now define the consul -serve
 First things first we need to have the consul server image on ECR. 
 We'll define a custom consul image that embeds envoy proxy that consul uses to implement the sidecar on .
 below is a sample customized Dockerfile of this.
+
 ```Dockerfile
 ARG ENVOY_VERSION=1.14-latest
 
@@ -76,7 +109,7 @@ ARG CONSUL_VERSION=1.8.0
 RUN mkdir -p /opt/consul  \
     && mkdir -p /etc/consul.d \
     && mkdir /var/logs \
-    # This should be avoided in production instead change ownership
+    # This should be avoided in production, instead change ownership
     && chmod -R 777 /opt/consul \
     && chmod -R 777 /etc/consul.d \
     && chmod -R 777 /var/logs
@@ -99,7 +132,7 @@ CMD [ "consul", "agent", "-config-file", "/etc/consul.d/consul.hcl" ]
 
 below is the config file loaded as the service starts up.
 
-```h
+```bash
 datacenter = "our_dc"
 data_dir = "/opt/consul"
 verify_incoming = false
@@ -125,7 +158,7 @@ auto_encrypt = {
    allow_tls = true
 }
 ```
-Push this to ECR and define task definition for this 
+Push this to ECR and create a task definition for this 
 below is asample of task definition withj exporsable ports as well a volume mount-points.
 >Please do not blindly copy paste, rather map settings according to your defined task
 ```json
