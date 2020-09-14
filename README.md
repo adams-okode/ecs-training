@@ -479,3 +479,11 @@ jobs:
 ```
 
 # Conclusion
+You should now have a basic idea of how consul works. The information and demonstration provided in this guide is not exactly the only way to handle consul in production, Hashicorp have a multitude of other implementations. 
+
+This [@repo](https://github.com/adams-okode/ecs-training) has the full implemetation of tha content discussed within this tutorial, While the repo cannot be run using a one liner(requires multiple configurations to work), it can act as good reference to get you sarted with deploying consul.
+
+
+That's all. Feel free to raise any issue on Github.
+
+Good Luck & ___Happy Coding___
