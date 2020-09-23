@@ -1,6 +1,6 @@
 # Introduction
 
-Its a common school of thought that microservices will solve our scaling problems, and yes this is true if done correctly. Microservice architecture can be termed as a variant of the service-oriented architecture (SOA) structural style that arranges an application as a collection of loosely coupled services. In a microservices architecture, services are usually quite fine-grained and the protocols are lightweight to ensure fast communication. There is no single definition for a microservice, However there are some key defining characteristics of microservices.
+Microservice architecture can be termed as a variant of the service-oriented architecture (SOA) structural style that arranges an application as a collection of loosely coupled services. In a microservice architecture implemetation, services are usually quite fine-grained and the protocols are lightweight to ensure fast communication. There is no single definition for a microservice, However there are some key defining characteristics of microservices.
 
 - are organized around business functionality
 - are language agnostic
@@ -9,7 +9,7 @@ Its a common school of thought that microservices will solve our scaling problem
 
 More information on microservices can be found on [Martin Fowler's Blog on Microservices](https://martinfowler.com/articles/microservices.html#MicroservicesAndSoa).
 
-With microservice architectures, dependency on a network becomes quite key and raises reliability questions. As the number of services increase, you'll find that you have to deal with the interactions between them, monitor the system wide health (across all services), the network should be fault tolerant, have system wide logging and telemetry in place, handle multiple points of failure, and a lot more. All the services needs to have these common functionalities in place to allow smooth and reliable service to service communication. 
+With microservice architectures, dependency on a network becomes quite key and raises reliability questions. As the number of services increase, you'll find that you have to deal with the interactions between them, monitor the system wide health (across all services), the network should be fault tolerant, have system wide logging and telemetry in place, handle multiple points of failure, and a lot more. All the services needs to have these common functionalities in place to allow smooth and reliable service to service communication. This is where Service Mesh implementation comes in handy.
 
 __What is a Service Mesh ?__
 
@@ -17,38 +17,41 @@ A service mesh, is an extra layer that allows different services to share data a
 
 __Why do we need a Service Mesh ?__
 
-Interservice communication is one of the most challenging aspects of microservice architectures. Netflix being a notable success story within the implementation of microservice architectures, have in turn contributed a wealth of resources to tackling the affir mention problem, examples being eureka(service discovery), cloud sleuth(distriuted tracing), ribbon(load balancing) [and many more](https://spring.io/projects/spring-cloud). However most of these tools are language specific.
+Interservice communication is one of the most challenging aspects of microservice architectures. Netflix being a notable success story within the implementation of microservice architectures, have contributed a wealth of resources to tackling the affir mention problem, examples being eureka(service discovery), cloud sleuth(distriuted tracing), ribbon(load balancing) [and many more](https://spring.io/projects/spring-cloud). However most of these tools are language specific.
 
-With containerization taking a forefront and becoming more popular within microservice deployments, a more language agnostic solution becomes more inherent.
+With containerization taking a fore front in modern day deployment and becoming more popular, a more language agnostic solution becomes more inherent.
 
 __What is Envoy?__
 
-Before we move into actual solutions to service meshes we need to understand what Envoy is and the fuss around it.
+Before we move into actual solutions and implementations of service meshes we need to understand what Envoy role is in cloud native architectures and just generally the fuss around it.
  
 [Envoy](https://www.envoyproxy.io/docs/envoy/latest/intro/what_is_envoy#:~:text=Envoy%20is%20an%20L7%20proxy,out%20of%20the%20belief%20that%3A&text=All%20of%20the%20Envoys%20form,unaware%20of%20the%20network%20topology.) is an OSI Layer 7 proxy & communication bus that has been designed for large modern service oriented architectures.
 
-Envoy project started out at Lyft sometime in 2015, as mentioned in their [blog](https://blog.envoyproxy.io/envoy-graduates-a6f71879852e), the company was struggling to stabilize it's rapidly growing microservice distributed architecture. Envoy quickly became an integral to the scaling of Lyft’s architecture. Soon after envoy was released as OSS and saw a large growth in the community.
+Envoy project started out at Lyft sometime in 2015, as mentioned in their [blog](https://blog.envoyproxy.io/envoy-graduates-a6f71879852e), the company was struggling to stabilize it's rapidly growing microservice distributed architecture at the time. After its adoption Envoy quickly became an integral part to the scaling of Lyft’s architecture. Soon after envoy was released as OSS and saw a large growth in the community.
 
 _How is Envoy used ?_
 
 Envoy is heavily used to implement extensible sidecar proxies within the service mesh architecture.
 
-A sidecar proxy is an application design pattern which abstracts functionality that is not key to the business logic away from the main architecture to ease the tracking and maintenance of the application as a unit, these include;
+A sidecar proxy is an application design pattern which abstracts functionality that is not key to the business logic away from the main services to ease the tracking and maintenance of the application as a unit, these include;
 - service-service communications, 
 - monitoring(health checks) and security
-- logging
+- logging ...etc
 
 A sidecar proxy is by default attached to a parent application to extend or add functionality hence the name sidecar.
 
-As mentioned envoy is widely used to implemented sidecar proxies in most production implementation due to a host of reasons, among the top being its Extensibility evident from the exsistence of multiple extension points as well as it's Rich configuration API just to mention a few.
+As mentioned envoy is widely used to implemented sidecar proxies in most production implementation this can be attributed to a host of reasons, among the top being its Extensibility, evident from the exsistence of multiple extension points as well as it's Rich configuration API, just to mention a few. 
 
-__Consul__
+At this point lets see How to pull all this together using and deploy using consul. 
+
+__What is Consul ?__
 
 [Consul](https://www.consul.io/) is a distributed highly available and data center aware solution to connect and Configure applications across dynamic, distributed infrasctructure. Put simply consul is a service mesh solution offering add on integrations to [HashiCorp's](https://www.hashicorp.com/) vast ecosystem of DevOps tools, other service meshes include Istio, Linkerd, and Citrix ADC.
 
 Consul comes with a simple built-in proxy to allow rapid out of the box configuration, it however also supports 3rd party proxy integrations such as Envoy.
 
-***Why Consul ?***      
+___Why Consul ?___
+
 - Multi Datacenter Aware
 - [Service Mesh / Segmentations](https://www.consul.io/docs/connect) 
 - [Service Discovery - auto detection of new service and location](https://www.consul.io/docs/discovery/services)
@@ -65,8 +68,10 @@ As seen from the above image we have a mixture of clients and servers within the
 # Working Example on Amazon ECS
 
 __Prerequisites__
+
 - Some Level of understanding of Bash Scripting
-- Some Level of Containerization and Networking
+- Some Level of working with Containerization tools 
+- Networking Experience
 
 ![Working Architecture](https://raw.githubusercontent.com/adams-okode/ecs-training/build/docs/consul-architecture-update.png)
 The pattern follows a multi-cluster deployment scheme implemented on top of Amazon ECS.
@@ -501,6 +506,6 @@ You should now have a basic idea of how consul works. The information and demons
 This [@repo](https://github.com/adams-okode/ecs-training) has the full implemetation of tha content discussed within this tutorial, While the repo cannot be run using a one liner(requires multiple configurations to work), it can act as good reference to get you sarted with deploying consul.
 
 
-That's all. Feel free to raise any issue on Github.
+That's all. Feel free to raise any issues on [Github](https://github.com/adams-okode/ecs-training).
 
 Good Luck & ___Happy Coding___
